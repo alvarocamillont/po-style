@@ -20,7 +20,7 @@ jobs:
     - uses: wagoid/commitlint-github-action@v2
 
     - nome: Cache
-      usa: actions/cache@v2
+      use: actions/cache@v2
       env:
         cache-name: cache-node-modules
       with:
