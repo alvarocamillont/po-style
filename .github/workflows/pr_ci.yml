@@ -14,10 +14,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v1
+      with:
+        fetch-depth: 0
+
+    - uses: wagoid/commitlint-github-action@v2
+
+    - nome: Cache
+      usa: actions/cache@v2
+      env:
+        cache-name: cache-node-modules
+      with:
+        # arquivos de cache npm são armazenados em `~/.npm` on Linux/macOS
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - uses: actions/setup-node@v1
       with:
         node-version: 12.x
     - run: npm i
-    - uses: wagoid/commitlint-github-action@v2
     - run: npm run format:check
