@@ -20,12 +20,12 @@ jobs:
     - uses: wagoid/commitlint-github-action@v2
 
     - uses: actions/setup-node@v1
-    with:
-      node-version: 12.x
+      with:
+        node-version: 12.x
 
 
     - uses: bahmutov/npm-install@v1
-    with:
-      useLockFile: false
+      with:
+        useLockFile: false
 
     - run: npm run format:check
