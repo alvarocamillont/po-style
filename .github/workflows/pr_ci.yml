@@ -19,21 +19,13 @@ jobs:
 
     - uses: wagoid/commitlint-github-action@v2
 
-    - name: Cache
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-node-modules
-      with:
-        # arquivos de cache npm são armazenados em `~/.npm` on Linux/macOS
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-
     - uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - run: npm i
+    with:
+      node-version: 12.x
+
+
+    - uses: bahmutov/npm-install@v1
+    with:
+      useLockFile: false
+
     - run: npm run format:check
